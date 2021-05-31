@@ -3,10 +3,28 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from './reducers';
+
+const createStoreWithMiddleware = applyMiddleware()(createStore);
+
+let appStore;
+
+if (process.env.NODE_ENV === 'production') {
+  appStore = createStoreWithMiddleware(reducers);
+} else {
+  appStore = createStoreWithMiddleware(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={appStore}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
