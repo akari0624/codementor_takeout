@@ -19,29 +19,32 @@ const ItemWrapper = styled.div`
     }
     .tags {
       span {
-        background-color: #EFEEEF;
+        background-color: #efeeef;
         padding: 2px 3px;
       }
     }
   }
 `
 
-function ArticleItem({title, author, categories, id, isSaved}) {
+function ArticleItem({ articleData }) {
+  const { id, title, author, categories, isSaved } = articleData
+
   return (
     <ItemWrapper>
       <div className="title">{title}</div>
       <div className="authorAndTags">
         <div className="author">{author}</div>
-        <div className="tags">{categories.map(c => <span key={c}>{c}</span>)}</div>
-        <SaveButton isSaved={isSaved} id={id}/>
+        <div className="tags">
+          {categories.map((c) => (
+            <span key={c}>{c}</span>
+          ))}
+        </div>
+        <SaveButton isSaved={isSaved} id={id} articleData={articleData} />
       </div>
     </ItemWrapper>
   )
 }
 
-ArticleItem.propTypes = {
-
-}
+ArticleItem.propTypes = {}
 
 export default ArticleItem
-

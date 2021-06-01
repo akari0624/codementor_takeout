@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-
-const FAVORITE_SET_KEY = 'favoriteSet';
+import { useState } from 'react'
+import styled from 'styled-components'
+import {useDispatch} from 'react-redux'
+import { addFavorite, deleteFavorite } from 'actions/favoriteId'
+import {addFavoriteArticle, removeFavoriteArticle} from 'actions/favorite_article'
 
 const SaveBTN = styled.span`
   padding: 2px 3px;
@@ -11,45 +12,34 @@ const SaveBTN = styled.span`
   &:hover {
     cursor: pointer;
   }
-`;
+`
 
-const toggleSave = (isSaved, id, set_IsSaved) => {
+const toggleSave = (isSaved, id, set_IsSaved, dispatch, articleData) => {
   if (!isSaved) {
     // do save
-    const fSet = localStorage.getItem(FAVORITE_SET_KEY);
-    if (!fSet) {
-      const initSet = new Set();
-      initSet.add(id);
-      localStorage.setItem(FAVORITE_SET_KEY, JSON.stringify(initSet));
-      set_IsSaved((prev) => !prev);
-    } else {
-      const lastSetData = JSON.parse(fSet);
-      const newSet = new Set(...lastSetData, id);
-      localStorage.setItem(FAVORITE_SET_KEY, JSON.stringify(newSet));
-      set_IsSaved((prev) => !prev);
-    }
+    dispatch(addFavorite(id))
+    dispatch(addFavoriteArticle(articleData))
+    set_IsSaved((prev) => !prev)
   } else {
     // do delete from favorite
-    const lastSet = localStorage.getItem(FAVORITE_SET_KEY);
-    const lastSetData2 = JSON.parse(lastSet);
-    const newSet2 = new Set(...lastSetData2);
-    newSet2.delete(id);
-    localStorage.setItem(FAVORITE_SET_KEY, JSON.stringify(newSet2));
-    set_IsSaved((prev) => !prev);
+    dispatch(deleteFavorite(id))
+    dispatch(removeFavoriteArticle(id))
+    set_IsSaved((prev) => !prev)
   }
-};
+}
 
-const SaveButton = ({ isSaved, id }) => {
-  const [_isSaved, set_IsSaved] = useState(isSaved);
+const SaveButton = ({ isSaved, id, articleData }) => {
+  const [_isSaved, set_IsSaved] = useState(isSaved)
 
+  const dispatch = useDispatch()
   return (
     <SaveBTN
-      saved={isSaved}
-      onClick={() => toggleSave(_isSaved, id, set_IsSaved)}
+      saved={_isSaved}
+      onClick={() => toggleSave(_isSaved, id, set_IsSaved, dispatch, articleData)}
     >
       {_isSaved ? 'Saved' : 'Save'}
     </SaveBTN>
-  );
-};
+  )
+}
 
-export default SaveButton;
+export default SaveButton

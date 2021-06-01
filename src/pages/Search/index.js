@@ -36,7 +36,7 @@ function SearchAndListPage(props) {
 
     setIsSubmitting((prev) => true);
   }, []);
-
+  console.log('rerender on page???')
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
