@@ -10,15 +10,19 @@ function ArticleListBind(props) {
   const artiles = useSelector(articlesSelector)
   const favoriteIds = useSelector(favoriteIdsSelector)
 
-  const checkedArticles = useMemo(() => (
-    artiles.map(a => {
-      if(favoriteIds.has(a.id)) {
-        a.isSaved = true
-      }
-      return a
-    })
-  ), [artiles, favoriteIds])
-
+  const checkedArticles = useMemo(
+    () =>
+      artiles.map((a) => {
+        if (favoriteIds.has(a.id)) {
+          a.isSaved = true
+        } else {
+          a.isSaved = false
+        }
+        return a
+      }),
+    [artiles, favoriteIds]
+  )
+  console.log(favoriteIds)
   console.log('rerender on article list')
 
   return <ArticleList data={checkedArticles} />

@@ -13,12 +13,12 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     window.addEventListener('beforeunload', (evt) => {
-      dispatch(onPageDismiss())
+      // dispatch(onPageDismiss())
     })
   }, [])
   return (
     <Suspense fallback={FallbackComp}>
-      <BrowserRouter basename="repo_base_name">
+      <BrowserRouter basename="">
         <Switch>
           <Route path="/search" component={SearchPage} />
           <Route path="/favorite" component={FavoritePage} />

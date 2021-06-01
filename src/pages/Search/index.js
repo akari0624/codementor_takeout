@@ -6,6 +6,7 @@ import algoliasearch from 'algoliasearch/lite';
 import ArticleListBind from './components/ArticleList'
 import {useDispatch} from 'react-redux'
 import {replaceArticles} from 'actions/article'
+import SearchAndFavoriteTabLayout from 'layout/search_and_favorite'
 
 const client = algoliasearch(process.env.REACT_APP_ALGOLIA_APLICATION_ID, process.env.REACT_APP_ALGOLIA_APLICATION_KEY);
 const algoliaIndex = client.initIndex(process.env.REACT_APP_ALGOLIA_INDEX_NAME);
@@ -38,14 +39,14 @@ function SearchAndListPage(props) {
   }, []);
   console.log('rerender on page???')
   return (
-    <div>
+    <SearchAndFavoriteTabLayout>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input name="keyword" register={register} />
       </form>
       <div>
         <ArticleListBind />
       </div>
-    </div>
+    </SearchAndFavoriteTabLayout>
   );
 }
 

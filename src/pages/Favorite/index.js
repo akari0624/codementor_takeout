@@ -1,11 +1,12 @@
-import React from 'react'
 import PropTypes from 'prop-types'
+import FavoriteArticleList from './components/ArticleList'
+import SearchAndFavoriteTabLayout from 'layout/search_and_favorite'
 
 function Favorite(props) {
   return (
-    <div>
-      
-    </div>
+    <SearchAndFavoriteTabLayout>
+      <FavoriteArticleList />
+    </SearchAndFavoriteTabLayout>
   )
 }
 
