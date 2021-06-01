@@ -8,6 +8,7 @@ function ArticleList({ data }) {
       {data.map((d) => (
         <ArtileItem
           key={d.id}
+          id={d.id}
           title={d.title}
           author={d.author_name}
           categories={d.categories}
