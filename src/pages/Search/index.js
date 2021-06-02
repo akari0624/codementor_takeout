@@ -1,16 +1,26 @@
-import { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useForm } from 'react-hook-form';
-import Input from 'components/Input';
-import algoliasearch from 'algoliasearch/lite';
+import { useCallback, useState } from 'react'
+import PropTypes from 'prop-types'
+import { useForm } from 'react-hook-form'
+import Input from 'components/Input'
+import algoliasearch from 'algoliasearch/lite'
 import ArticleListBind from './components/ArticleList'
-import {useDispatch} from 'react-redux'
-import {replaceArticles} from 'actions/article'
+import Loading from 'components/Loading'
+import { useDispatch } from 'react-redux'
+import { replaceArticles } from 'actions/article'
 import SearchAndFavoriteTabLayout from 'layout/search_and_favorite'
+import styled from 'styled-components'
 
-const client = algoliasearch(process.env.REACT_APP_ALGOLIA_APLICATION_ID, process.env.REACT_APP_ALGOLIA_APLICATION_KEY);
-const algoliaIndex = client.initIndex(process.env.REACT_APP_ALGOLIA_INDEX_NAME);
+const client = algoliasearch(
+  process.env.REACT_APP_ALGOLIA_APLICATION_ID,
+  process.env.REACT_APP_ALGOLIA_APLICATION_KEY
+)
+const algoliaIndex = client.initIndex(process.env.REACT_APP_ALGOLIA_INDEX_NAME)
 
+const FormWrapper = styled.section`
+  margin-left: 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+`
 function SearchAndListPage(props) {
   const {
     register,
@@ -21,35 +31,39 @@ function SearchAndListPage(props) {
     defaultValues: {
       keyword: '',
     },
-  });
+  })
 
   const dispatch = useDispatch()
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const onSubmit = useCallback(async (formData) => {
-    const keyword = formData?.keyword;
+    try {
+      const keyword = formData?.keyword
+      setIsSubmitting((prev) => true)
+      const res = await algoliaIndex.search(keyword)
+      const { hits } = res
 
-    algoliaIndex.search(keyword).then(({ hits }) => {
-      console.log(hits);
+      console.log(hits)
+      setIsSubmitting((prev) => false)
       dispatch(replaceArticles(hits))
-    });
-
-    setIsSubmitting((prev) => true);
-  }, []);
+    } catch (err) {
+      console.log('error!!', err)
+    }
+  }, [])
   console.log('rerender on page???')
   return (
     <SearchAndFavoriteTabLayout>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Input name="keyword" register={register} />
-      </form>
-      <div>
-        <ArticleListBind />
-      </div>
+      <FormWrapper>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input name="keyword" register={register} />
+        </form>
+      </FormWrapper>
+      <div>{isSubmitting ? <Loading /> : <ArticleListBind />}</div>
     </SearchAndFavoriteTabLayout>
-  );
+  )
 }
 
-SearchAndListPage.propTypes = {};
+SearchAndListPage.propTypes = {}
 
-export default SearchAndListPage;
+export default SearchAndListPage
