@@ -14,11 +14,10 @@ function ArticleListBind(props) {
     () =>
       artiles.map((a) => {
         if (favoriteIds.has(a.id)) {
-          a.isSaved = true
+          return {...a, isSaved: true}
         } else {
-          a.isSaved = false
+          return {...a, isSaved: false}
         }
-        return a
       }),
     [artiles, favoriteIds]
   )
