@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addFavorite, deleteFavorite } from 'actions/favoriteId'
-import {addFavoriteArticle, removeFavoriteArticle} from 'actions/favorite_article'
+import {
+  addFavoriteArticle,
+  removeFavoriteArticle,
+} from 'actions/favorite_article'
 
 const SaveBTN = styled.span`
   padding: 2px 3px;
@@ -28,14 +31,17 @@ const toggleSave = (isSaved, id, set_IsSaved, dispatch, articleData) => {
   }
 }
 
-const SaveButton = ({ isSaved, id, articleData }) => {
+const SaveButton = ({ isSaved, id, articleData, ...rest }) => {
   const [_isSaved, set_IsSaved] = useState(isSaved)
 
   const dispatch = useDispatch()
   return (
     <SaveBTN
+      {...rest}
       saved={_isSaved}
-      onClick={() => toggleSave(_isSaved, id, set_IsSaved, dispatch, articleData)}
+      onClick={() =>
+        toggleSave(_isSaved, id, set_IsSaved, dispatch, articleData)
+      }
     >
       {_isSaved ? 'Saved' : 'Save'}
     </SaveBTN>

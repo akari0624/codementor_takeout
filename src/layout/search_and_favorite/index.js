@@ -7,6 +7,28 @@ const LayoutWrapper = styled.main`
   height: fill-available;
 `
 
+const TabsBackground = styled.div`
+  background-color: #efeeef;
+  width: 100vw;
+  height: 70px;
+  display: flex;
+  align-items: flex-end;
+`
+
+const HighlightTab = styled.button`
+  background-color: #ffffff;
+  color: #000000;
+  padding: 0.5rem 1.2rem;
+  border: none;
+`
+
+const NotHighlightTab = styled.button`
+  background-color: #efeeef;
+  color: #a9a8a9;
+  padding: 0.5rem 1.2rem;
+  border: none;
+`
+
 export default function SearchAndFavoriteTabLayout({ children }) {
   const history = useHistory()
 
@@ -24,13 +46,13 @@ export default function SearchAndFavoriteTabLayout({ children }) {
   const handleClick = (path) => {
     history.push(path)
   }
-
+  console.log('11', history?.location?.pathname)
   return (
     <LayoutWrapper>
-      <div>
-        <div>
-          {RedirectButtons.map(({ url, name }) => (
-            <button
+      <TabsBackground>
+        {RedirectButtons.map(({ url, name }, idx) => (
+          history?.location?.pathname === url || (history?.location?.pathname === '/' && idx === 0) ? (
+            <HighlightTab
               key={name}
               type="button"
               onClick={() => {
@@ -38,11 +60,21 @@ export default function SearchAndFavoriteTabLayout({ children }) {
               }}
             >
               {name}
-            </button>
-          ))}
-        </div>
-        {children}
-      </div>
+            </HighlightTab>
+          ) : (
+            <NotHighlightTab
+              key={name}
+              type="button"
+              onClick={() => {
+                handleClick(url)
+              }}
+            >
+              {name}
+            </NotHighlightTab>
+          )
+        ))}
+      </TabsBackground>
+      {children}
     </LayoutWrapper>
   )
 }
