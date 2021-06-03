@@ -50,7 +50,7 @@ export default function SearchAndFavoriteTabLayout({ children }) {
     <LayoutWrapper>
       <TabsBackground>
         {RedirectButtons.map(({ url, name }, idx) => (
-          history?.location?.pathname === url || (history?.location?.pathname === '/' && idx === 0) ? (
+          history?.location?.pathname === url || ((history?.location?.pathname === '/' || history?.location?.pathname === '/codementor_takeout/') && idx === 0) ? (
             <HighlightTab
               key={name}
               type="button"
