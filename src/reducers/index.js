@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import articlesReducer from './Articles';
+import articlesReducer from './Article';
 import favoriteIdReducer from './FavoriteId'
 import favoriteArticlesReducer from './FavoriteArticles'
 import extraDataReducer from './ExtraData'

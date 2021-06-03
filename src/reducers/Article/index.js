@@ -1,4 +1,5 @@
 import { handleActions } from 'redux-actions';
+import {REPLACE_ARTICLES} from 'actions/article/type'
 
 const InitArticleState = {
   articles: []
@@ -7,8 +8,7 @@ const InitArticleState = {
 
 export default handleActions(
   {
-    REPLACE_ARTICLES: (state, { payload }) => {
-      console.log('new payload', payload)
+    [REPLACE_ARTICLES]: (state, { payload }) => {
       return {...state, articles: payload}
     },
   },

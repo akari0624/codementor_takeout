@@ -1,0 +1,1 @@
+export const REPLACE_ARTICLES = 'REPLACE_ARTICLES'
