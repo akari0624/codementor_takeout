@@ -46,7 +46,6 @@ export default function SearchAndFavoriteTabLayout({ children }) {
   const handleClick = (path) => {
     history.push(path)
   }
-  console.log('11', history?.location?.pathname)
   return (
     <LayoutWrapper>
       <TabsBackground>

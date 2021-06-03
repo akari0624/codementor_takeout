@@ -31,12 +31,15 @@ const toggleSave = (isSaved, id, set_IsSaved, dispatch, articleData) => {
   }
 }
 
+export const SaveBTN_testId = 'saveBTN_id'
+
 const SaveButton = ({ isSaved, id, articleData, ...rest }) => {
   const [_isSaved, set_IsSaved] = useState(isSaved)
 
   const dispatch = useDispatch()
   return (
     <SaveBTN
+      data-testid={SaveBTN_testId}
       {...rest}
       saved={_isSaved}
       onClick={() =>

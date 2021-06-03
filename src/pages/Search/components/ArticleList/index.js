@@ -7,22 +7,20 @@ const articlesSelector = (state) => state?.article?.articles
 const favoriteIdsSelector = (state) => state?.favorite
 
 function ArticleListBind(props) {
-  const artiles = useSelector(articlesSelector)
+  const articles = useSelector(articlesSelector)
   const favoriteIds = useSelector(favoriteIdsSelector)
 
   const checkedArticles = useMemo(
     () =>
-      artiles.map((a) => {
+      articles.map((a) => {
         if (favoriteIds.has(a.id)) {
           return {...a, isSaved: true}
         } else {
           return {...a, isSaved: false}
         }
       }),
-    [artiles, favoriteIds]
+    [articles, favoriteIds]
   )
-  console.log(favoriteIds)
-  console.log('rerender on article list')
 
   return <ArticleList data={checkedArticles} />
 }
