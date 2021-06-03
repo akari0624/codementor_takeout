@@ -1,17 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import ArtileItem from 'components/ArticleItem'
 
+export const ITEM_TEST_ID = 'id_article'
+
 function ArticleList({ data }) {
+  if (data?.length === 0 || !data) {
+    return <div>no result</div>
+  }
   return (
     <div>
       {data.map((d) => (
-        <ArtileItem key={d.id} articleData={d} />
+        <ArtileItem data-testid={ITEM_TEST_ID} key={d.id} articleData={d} />
       ))}
     </div>
   )
 }
-
-ArticleList.propTypes = {}
 
 export default ArticleList

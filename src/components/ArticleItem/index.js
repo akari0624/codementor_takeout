@@ -35,11 +35,11 @@ const ItemWrapper = styled.div`
   }
 `
 
-function ArticleItem({ articleData }) {
+function ArticleItem({ articleData, ...rest }) {
   const { id, title, author_name, categories, isSaved } = articleData
   const [showSave, setShowSave] = useState(false)
   return (
-    <ItemWrapper onMouseEnter={() => {setShowSave(true)}} onMouseLeave={() => {setShowSave(false)}} >
+    <ItemWrapper {...rest} onMouseEnter={() => {setShowSave(true)}} onMouseLeave={() => {setShowSave(false)}} >
       <div className="title">{title}</div>
       <div className="authorAndTags">
         <div className="author">{author_name}</div>
